@@ -1,0 +1,33 @@
+# ============================================================
+# Git Ignore Configuration for S&P 500 Big Data Pipeline
+# ============================================================
+
+# Environment variables & secrets
+.env
+
+# Python caches and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+.pytest_cache/
+
+# Large Data files (Exclude 3.16 GB CSV exceeding GitHub 100MB limit)
+data/sp500_stocks.csv
+data/*.zip
+data/*.tar.gz
+checkpoints/
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Output Parquet files & storage state
+*.parquet
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini

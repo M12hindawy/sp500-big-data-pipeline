@@ -1,0 +1,52 @@
+symbol,company,sector,sub_industry,headquarters,date_added,founded
+AAPL,Apple Inc.,Information Technology,Technology Hardware,"Cupertino, California",1982-11-30,1976
+MSFT,Microsoft Corporation,Information Technology,Systems Software,"Redmond, Washington",1994-06-01,1975
+NVDA,Nvidia Corporation,Information Technology,Semiconductors,"Santa Clara, California",2001-11-30,1993
+AVGO,Broadcom Inc.,Information Technology,Semiconductors,"Palo Alto, California",2014-05-08,1961
+CSCO,Cisco Systems Inc.,Information Technology,Communications Equipment,"San Jose, California",1993-12-01,1984
+ADBE,Adobe Inc.,Information Technology,Application Software,"San Jose, California",1997-05-05,1982
+CRM,Salesforce Inc.,Information Technology,Application Software,"San Francisco, California",2008-09-15,1999
+ORCL,Oracle Corporation,Information Technology,Systems Software,"Austin, Texas",1989-08-31,1977
+INTC,Intel Corporation,Information Technology,Semiconductors,"Santa Clara, California",1976-12-31,1968
+AMD,Advanced Micro Devices,Information Technology,Semiconductors,"Santa Clara, California",2017-03-20,1969
+JPM,JPMorgan Chase and Co.,Financials,Diversified Banks,"New York City, New York",1975-06-30,1799
+V,Visa Inc.,Financials,Transaction Processing,"San Francisco, California",2009-12-21,1958
+MA,Mastercard Inc.,Financials,Transaction Processing,"Purchase, New York",2008-07-18,1966
+BAC,Bank of America Corp,Financials,Diversified Banks,"Charlotte, North Carolina",1976-06-30,1998
+WFC,Wells Fargo and Company,Financials,Diversified Banks,"San Francisco, California",1976-06-30,1852
+GS,Goldman Sachs Group,Financials,Investment Banking,"New York City, New York",2002-07-22,1869
+MS,Morgan Stanley,Financials,Investment Banking,"New York City, New York",1993-06-01,1935
+BLK,BlackRock Inc.,Financials,Asset Management,"New York City, New York",2011-04-04,1988
+GOOGL,Alphabet Inc. Class A,Communication Services,Interactive Media,"Mountain View, California",2006-04-03,1998
+GOOG,Alphabet Inc. Class C,Communication Services,Interactive Media,"Mountain View, California",2014-04-03,1998
+META,Meta Platforms Inc.,Communication Services,Interactive Media,"Menlo Park, California",2013-12-23,2004
+NFLX,Netflix Inc.,Communication Services,Movies and Entertainment,"Los Gatos, California",2010-12-20,1997
+DIS,Walt Disney Company,Communication Services,Movies and Entertainment,"Burbank, California",1976-06-30,1923
+VZ,Verizon Communications,Communication Services,Integrated Telecom,"New York City, New York",1983-11-30,1983
+CMCSA,Comcast Corporation,Communication Services,Cable and Satellite,"Philadelphia, Pennsylvania",2002-11-19,1963
+AMZN,Amazon.com Inc.,Consumer Discretionary,Broadline Retail,"Seattle, Washington",2005-11-18,1994
+TSLA,Tesla Inc.,Consumer Discretionary,Automobile Manufacturers,"Austin, Texas",2020-12-21,2003
+HD,Home Depot Inc.,Consumer Discretionary,Home Improvement Retail,"Atlanta, Georgia",1988-03-31,1978
+MCD,McDonalds Corporation,Consumer Discretionary,Restaurants,"Chicago, Illinois",1970-06-30,1940
+NKE,NIKE Inc.,Consumer Discretionary,Apparel and Luxury Goods,"Beaverton, Oregon",1988-11-30,1964
+SBUX,Starbucks Corporation,Consumer Discretionary,Restaurants,"Seattle, Washington",2000-12-05,1971
+PG,Procter and Gamble Company,Consumer Staples,Household Products,"Cincinnati, Ohio",1957-03-04,1837
+KO,Coca-Cola Company,Consumer Staples,Soft Drinks,"Atlanta, Georgia",1957-03-04,1892
+PEP,PepsiCo Inc.,Consumer Staples,Soft Drinks,"Purchase, New York",1957-03-04,1898
+COST,Costco Wholesale Corp,Consumer Staples,Consumer Staples Retail,"Issaquah, Washington",1993-10-01,1983
+WMT,Walmart Inc.,Consumer Staples,Consumer Staples Retail,"Bentonville, Arkansas",1982-08-31,1962
+JNJ,Johnson and Johnson,Health Care,Pharmaceuticals,"New Brunswick, New Jersey",1973-06-30,1886
+UNH,UnitedHealth Group Inc.,Health Care,Managed Healthcare,"Minnetonka, Minnesota",1994-07-01,1977
+LLY,Eli Lilly and Company,Health Care,Pharmaceuticals,"Indianapolis, Indiana",1970-12-31,1876
+PFE,Pfizer Inc.,Health Care,Pharmaceuticals,"New York City, New York",1957-03-04,1849
+ABBV,AbbVie Inc.,Health Care,Biotechnology,"North Chicago, Illinois",2012-12-31,2013
+MRK,Merck and Co. Inc.,Health Care,Pharmaceuticals,"Rahway, New Jersey",1957-03-04,1891
+XOM,Exxon Mobil Corporation,Energy,Integrated Oil and Gas,"Spring, Texas",1957-03-04,1870
+CVX,Chevron Corporation,Energy,Integrated Oil and Gas,"San Ramon, California",1957-03-04,1879
+COP,ConocoPhillips,Energy,Oil and Gas Exploration,"Houston, Texas",1957-03-04,1917
+CAT,Caterpillar Inc.,Industrials,Construction Machinery,"Irving, Texas",1957-03-04,1925
+GE,GE Aerospace,Industrials,Aerospace and Defense,"Evendale, Ohio",1957-03-04,1892
+HON,Honeywell International,Industrials,Industrial Conglomerates,"Charlotte, North Carolina",1964-03-31,1906
+UPS,United Parcel Service,Industrials,Air Freight and Logistics,"Atlanta, Georgia",2002-07-22,1907
+NEE,NextEra Energy,Utilities,Electric Utilities,"Juno Beach, Florida",1976-06-30,1925
+LIN,Linde plc,Materials,Industrial Gases,"Guildford, United Kingdom",1992-07-01,1879
