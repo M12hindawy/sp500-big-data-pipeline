@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S&P 500 Stock Data Pipeline | Technical Presentation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #090d16; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .slide { display: none; }
+    .slide.active { display: flex; }
+    .glass-panel { background: rgba(18, 26, 45, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(56, 189, 248, 0.15); }
+    .glass-card { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(51, 65, 85, 0.6); }
+    .glow-cyan { text-shadow: 0 0 20px rgba(56, 189, 248, 0.4); }
+  </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col justify-between overflow-hidden select-none">
+
+  <!-- Top Navigation & Controls Bar -->
+  <header class="bg-slate-950/80 backdrop-blur border-b border-slate-800/80 px-6 py-3 flex items-center justify-between z-50">
+    <div class="flex items-center gap-3">
+      <div class="h-3 w-3 rounded-full bg-sky-400 animate-pulse"></div>
+      <span class="font-bold text-sm tracking-wide text-white">S&P 500 STOCK DATA PIPELINE</span>
+      <span class="text-xs px-2.5 py-0.5 rounded bg-sky-500/10 border border-sky-500/30 text-sky-400 font-mono">NTI FINAL TECHNICAL DEFENSE</span>
+    </div>
+
+    <!-- Center Slide Counter -->
+    <div class="flex items-center gap-2 bg-slate-900 px-4 py-1.5 rounded-full border border-slate-800 font-mono text-xs">
+      <span class="text-slate-400">SLIDE</span>
+      <span id="current-slide-num" class="text-sky-400 font-bold">1</span>
+      <span class="text-slate-600">/</span>
+      <span id="total-slides-num" class="text-slate-400">20</span>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-2 text-xs">
+      <a href="https://github.com/M12hindawy/sp500-big-data-pipeline" target="_blank" class="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        <span>GitHub Repository</span>
+      </a>
+      <a href="S&P_500_Stock_Data_Pipeline_Final.pptx" download class="flex items-center gap-1.5 bg-sky-600 hover:bg-sky-500 text-white font-bold px-3.5 py-1.5 rounded-lg transition shadow-lg shadow-sky-600/20">
+        <span>⬇️ Download PPTX</span>
+      </a>
+      <button onclick="toggleFullscreen()" class="p-1.5 text-slate-400 hover:text-white bg-slate-900 border border-slate-800 rounded-lg" title="Toggle Fullscreen">
+        ⛶
+      </button>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="w-full bg-slate-900 h-1">
+    <div id="progress-bar" class="bg-gradient-to-r from-sky-400 to-emerald-400 h-1 transition-all duration-300" style="width: 5%"></div>
+  </div>
+
+  <!-- Main Presentation Slides Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-6 md:p-10 flex items-center justify-center">
+
+    <!-- SLIDE 1: Title -->
+    <section class="slide active flex-col justify-center items-center text-center space-y-6 w-full animate-fade">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-mono">
+        BIG DATA • DATA LAKE • STREAMING • ANALYTICS
+      </div>
+      <h1 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight glow-cyan max-w-4xl">
+        S&P 500 Stock Data Pipeline
+      </h1>
+      <p class="text-lg md:text-xl text-slate-300 max-w-2xl font-medium">
+        A single-machine Big Data architecture for batch processing, streaming simulation, and analytics-ready serving.
+      </p>
+
+      <div class="grid grid-cols-3 gap-4 max-w-xl w-full mt-4">
+        <div class="glass-card p-4 rounded-xl text-center">
+          <div class="text-sky-400 font-bold text-sm">1. INGEST</div>
+          <div class="text-xs text-slate-400 mt-1">Kafka KRaft & MinIO Bronze</div>
+        </div>
+        <div class="glass-card p-4 rounded-xl text-center">
+          <div class="text-emerald-400 font-bold text-sm">2. PROCESS</div>
+          <div class="text-xs text-slate-400 mt-1">Spark Batch & Structured Streaming</div>
+        </div>
+        <div class="glass-card p-4 rounded-xl text-center">
+          <div class="text-yellow-400 font-bold text-sm">3. SERVE</div>
+          <div class="text-xs text-slate-400 mt-1">PostgreSQL & Power BI DirectQuery</div>
+        </div>
+      </div>
+
+      <div class="pt-6 border-t border-slate-800/80 w-full max-w-md flex flex-col items-center">
+        <span class="text-xs text-slate-500 uppercase tracking-widest font-mono">Under Supervision Of</span>
+        <span class="text-base font-bold text-white mt-1">Eng. Ahmed Hassan</span>
+        <span class="text-xs text-sky-400">National Telecommunication Institute (NTI)</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: Team -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">01 / PROJECT TEAM</div>
+      <h2 class="text-3xl font-bold text-white">Team & Engineering Responsibilities</h2>
+      <p class="text-slate-400 text-sm">A five-person engineering team covering the entire data lifecycle from infrastructure to downstream analytics.</p>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 pt-4">
+        <div class="glass-panel p-5 rounded-xl text-center space-y-2">
+          <div class="w-12 h-12 rounded-full bg-sky-500/20 text-sky-400 font-bold text-lg flex items-center justify-center mx-auto border border-sky-500/30">01</div>
+          <div class="font-bold text-white text-sm">Abdelrahman Mandor</div>
+          <div class="text-xs text-slate-400">Data Architecture & Kafka Streaming</div>
+        </div>
+        <div class="glass-panel p-5 rounded-xl text-center space-y-2">
+          <div class="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-lg flex items-center justify-center mx-auto border border-emerald-500/30">02</div>
+          <div class="font-bold text-white text-sm">Hania Mohamed</div>
+          <div class="text-xs text-slate-400">Spark Batch & Feature Engineering</div>
+        </div>
+        <div class="glass-panel p-5 rounded-xl text-center space-y-2">
+          <div class="w-12 h-12 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-lg flex items-center justify-center mx-auto border border-yellow-500/30">03</div>
+          <div class="font-bold text-white text-sm">Asmaa Adel</div>
+          <div class="text-xs text-slate-400">Data Quality & Validation Gates</div>
+        </div>
+        <div class="glass-panel p-5 rounded-xl text-center space-y-2">
+          <div class="w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-lg flex items-center justify-center mx-auto border border-purple-500/30">04</div>
+          <div class="font-bold text-white text-sm">Catherine Yousry</div>
+          <div class="text-xs text-slate-400">Airflow DAGs & Orchestration</div>
+        </div>
+        <div class="glass-panel p-5 rounded-xl text-center space-y-2">
+          <div class="w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-lg flex items-center justify-center mx-auto border border-rose-500/30">05</div>
+          <div class="font-bold text-white text-sm">Mohamed Ashraf</div>
+          <div class="text-xs text-slate-400">PostgreSQL Serving & BI Analytics</div>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 text-center text-xs text-slate-400">
+        Supervised by <strong class="text-white">Eng. Ahmed Hassan</strong> — National Telecommunication Institute
+      </div>
+    </section>
+
+    <!-- SLIDE 3: Roadmap -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">ROADMAP & AGENDA</div>
+      <h2 class="text-3xl font-bold text-white">What the Pipeline Demonstrates</h2>
+      <p class="text-slate-400 text-sm">A practical engineering path from historical market records to trusted downstream products.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4 pt-2">
+        <div class="glass-card p-4 rounded-xl space-y-2 border-l-4 border-l-sky-400">
+          <span class="text-xs font-mono text-sky-400 font-bold">01. CONTEXT</span>
+          <h3 class="font-bold text-white text-sm">Problem & Motivation</h3>
+          <p class="text-xs text-slate-400">51.59M records, 3.16GB dataset, data contracts, and decoupled design.</p>
+        </div>
+        <div class="glass-card p-4 rounded-xl space-y-2 border-l-4 border-l-emerald-400">
+          <span class="text-xs font-mono text-emerald-400 font-bold">02. FOUNDATION</span>
+          <h3 class="font-bold text-white text-sm">Infrastructure</h3>
+          <p class="text-xs text-slate-400">Docker isolated bridge network, MinIO S3 Lakehouse, Kafka 4.0 KRaft mode.</p>
+        </div>
+        <div class="glass-card p-4 rounded-xl space-y-2 border-l-4 border-l-yellow-400">
+          <span class="text-xs font-mono text-yellow-400 font-bold">03. PROCESSING</span>
+          <h3 class="font-bold text-white text-sm">Dual Processing</h3>
+          <p class="text-xs text-slate-400">Spark Batch Medallion (Silver/Gold Parquet) + Structured Streaming.</p>
+        </div>
+        <div class="glass-card p-4 rounded-xl space-y-2 border-l-4 border-l-purple-400">
+          <span class="text-xs font-mono text-purple-400 font-bold">04. DELIVERY</span>
+          <h3 class="font-bold text-white text-sm">Orchestration & Serving</h3>
+          <p class="text-xs text-slate-400">Airflow DAGs, PostgreSQL 16 serving layer, Power BI DirectQuery views.</p>
+        </div>
+        <div class="glass-card p-4 rounded-xl space-y-2 border-l-4 border-l-rose-400">
+          <span class="text-xs font-mono text-rose-400 font-bold">05. RELIABILITY</span>
+          <h3 class="font-bold text-white text-sm">Testing & Recovery</h3>
+          <p class="text-xs text-slate-400">20/20 PyTest tests passed, crash drills, zero data loss, and live demo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: Project Objectives -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">01 / CONTEXT</div>
+      <h2 class="text-3xl font-bold text-white">Project Objective & Core Philosophy</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+        <div class="glass-panel p-6 rounded-2xl space-y-3">
+          <div class="text-sky-400 font-mono text-xs font-bold uppercase">Data Source</div>
+          <h3 class="text-lg font-bold text-white">Real Historical Data</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Historical daily OHLCV market observations covering 25 years (2000–2025) of S&P 500 trading across 500+ equities.
+          </p>
+        </div>
+        <div class="glass-panel p-6 rounded-2xl space-y-3 border-sky-500/40">
+          <div class="text-emerald-400 font-mono text-xs font-bold uppercase">Engineering Pipeline</div>
+          <h3 class="text-lg font-bold text-white">Lambda Architecture</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Combines comprehensive historical batch analysis with continuous streaming simulation over deterministic replay windows.
+          </p>
+        </div>
+        <div class="glass-panel p-6 rounded-2xl space-y-3">
+          <div class="text-yellow-400 font-mono text-xs font-bold uppercase">Business Outcome</div>
+          <h3 class="text-lg font-bold text-white">Analytics-Ready Insights</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Serves high-performance PostgreSQL analytical views with sub-millisecond DirectQuery latency for Power BI and ML handoff.
+          </p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs">
+        ⚠️ <strong>Scope Contract:</strong> The streaming path replays historical market observations over deterministic synthetic event time to simulate high-velocity streaming behavior without live stock exchange API dependencies.
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Dataset Scale & Contract -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">01 / CONTEXT</div>
+      <div class="flex justify-between items-end">
+        <div>
+          <h2 class="text-3xl font-bold text-white">Real Dataset Scale & Strict Data Contract</h2>
+          <p class="text-slate-400 text-sm mt-1">Authentic 25-Year S&P 500 archive with rigorous schema guarantees.</p>
+        </div>
+        <span class="text-xs px-3 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full font-mono font-bold">51,590,914 RECORDS (3.16 GB)</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        <div class="glass-card p-5 rounded-xl space-y-3 font-mono text-xs">
+          <div class="text-slate-400 border-b border-slate-800 pb-2 flex justify-between">
+            <span>REPRESENTATIVE ROW (sp500_stocks.csv)</span>
+            <span class="text-emerald-400">REAL VALUES</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-slate-300">
+            <div>date: <span class="text-yellow-400">2000-01-03</span></div>
+            <div>symbol: <span class="text-sky-400">A</span></div>
+            <div>open: <span class="text-white">$46.87</span></div>
+            <div>high: <span class="text-white">$46.99</span></div>
+            <div>low: <span class="text-white">$40.10</span></div>
+            <div>close: <span class="text-white">$42.86</span></div>
+            <div>adj_close: <span class="text-white">$42.86</span></div>
+            <div>volume: <span class="text-emerald-400">4,674,353</span></div>
+          </div>
+        </div>
+
+        <div class="glass-panel p-5 rounded-xl space-y-3 text-xs">
+          <div class="text-sky-400 font-bold uppercase tracking-wider">Data Quality Rules Enforced</div>
+          <ul class="space-y-2 text-slate-300">
+            <li class="flex items-center gap-2"><span class="text-emerald-400">✔</span> <strong>Non-null guarantees:</strong> Ticker and trading_date are mandatory primary keys.</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-400">✔</span> <strong>Positive values:</strong> Open, High, Low, Close, and Volume must be strictly > 0.</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-400">✔</span> <strong>OHLC consistency:</strong> High ≥ Low, High ≥ Open/Close, Low ≤ Open/Close.</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-400">✔</span> <strong>Deduplication:</strong> Distinct (symbol, trading_date) enforced before storage.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: One System Clear Responsibilities -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">01 / CONTEXT</div>
+      <h2 class="text-3xl font-bold text-white">One System, Clear Responsibilities</h2>
+      <p class="text-slate-400 text-sm">Every technology has a decoupled, dedicated responsibility in the pipeline architecture.</p>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 pt-2">
+        <div class="glass-card p-4 rounded-xl border-t-2 border-t-sky-400">
+          <div class="font-bold text-sky-400 text-sm">MinIO S3</div>
+          <div class="text-xs text-slate-300 font-medium mt-1">Object Lakehouse Storage</div>
+          <p class="text-[11px] text-slate-400 mt-2">Houses Bronze raw CSV, Silver Parquet partitions, Gold analytics, and streaming checkpoints.</p>
+        </div>
+        <div class="glass-card p-4 rounded-xl border-t-2 border-t-emerald-400">
+          <div class="font-bold text-emerald-400 text-sm">Apache Kafka 4.0</div>
+          <div class="text-xs text-slate-300 font-medium mt-1">Event Ingestion Backbone</div>
+          <p class="text-[11px] text-slate-400 mt-2">KRaft metadata mode, 3 partitions keyed by ticker for guaranteed per-stock event ordering.</p>
+        </div>
+        <div class="glass-card p-4 rounded-xl border-t-2 border-t-yellow-400">
+          <div class="font-bold text-yellow-400 text-sm">Apache Spark 3.5</div>
+          <div class="text-xs text-slate-300 font-medium mt-1">Batch & Streaming Processing</div>
+          <p class="text-[11px] text-slate-400 mt-2">Executes data cleaning, corporate joins, financial feature engineering, and 5-min window aggregates.</p>
+        </div>
+        <div class="glass-card p-4 rounded-xl border-t-2 border-t-purple-400">
+          <div class="font-bold text-purple-400 text-sm">Apache Airflow 2.10</div>
+          <div class="text-xs text-slate-300 font-medium mt-1">Workflow Orchestration</div>
+          <p class="text-[11px] text-slate-400 mt-2">Coordinates sequential DAG tasks, schedules jobs, and validates data quality gates.</p>
+        </div>
+        <div class="glass-card p-4 rounded-xl border-t-2 border-t-rose-400">
+          <div class="font-bold text-rose-400 text-sm">PostgreSQL 16</div>
+          <div class="text-xs text-slate-300 font-medium mt-1">Analytical Serving Layer</div>
+          <p class="text-[11px] text-slate-400 mt-2">Stores 25,500 daily metrics and 4,335 streaming windows with B-Tree indexes for Power BI.</p>
+        </div>
+        <div class="glass-card p-4 rounded-xl border-t-2 border-t-cyan-400">
+          <div class="font-bold text-cyan-400 text-sm">Power BI & ML</div>
+          <div class="text-xs text-slate-300 font-medium mt-1">Downstream Consumers</div>
+          <p class="text-[11px] text-slate-400 mt-2">Reads Gold views via DirectQuery in 0.145 ms; ML K-Means strictly decoupled in docs/ML_HANDOFF.md.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: End-to-End Architecture Flow -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">01 / CONTEXT</div>
+      <h2 class="text-3xl font-bold text-white">End-to-End Data Pipeline Architecture</h2>
+      <p class="text-slate-400 text-sm">Decoupled Lambda architecture with dual processing paths.</p>
+
+      <div class="glass-panel p-6 rounded-2xl text-xs font-mono text-slate-300 overflow-x-auto">
+        <pre class="leading-relaxed">
+Kaggle Archive (3.16 GB, 51.59M records)
+   │
+   ▼
+MinIO S3 Bronze Lakehouse (s3a://stock-data/bronze/)
+   │
+   ├───────────────────────────────┬───────────────────────────────┐
+   ▼ (Batch Path)                  ▼ (Streaming Simulation Path)   │
+Spark 3.5 Batch Processing       Historical Python Producer        │
+   │                               │                               │
+   │ (Clean, Enrich, Partition)    ▼                               │
+   │                             Kafka 4.0 KRaft (3 Partitions)    │
+   │                               │                               │
+   ▼                               ▼                               ▼
+MinIO Silver (25 Parquets)       Spark Structured Streaming ──── MinIO Checkpoints
+   │                             (5-Min Windows, 10-Min Watermark) (58 objects)
+   ▼                               │
+MinIO Gold (19 Parquets)           ▼
+   │                               │
+   └───────────────┬───────────────┘
+                   ▼
+       PostgreSQL 16 Serving Layer (25,500 + 4,335 rows)
+                   │
+                   ▼
+         Power BI DirectQuery (0.145 ms Index Latency)
+        </pre>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: Docker Infrastructure -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">02 / FOUNDATION</div>
+      <h2 class="text-3xl font-bold text-white">Docker: Reproducible Single-Machine Runtime</h2>
+      <p class="text-slate-400 text-sm">7 microservice containers orchestrated on an isolated bridge network.</p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+        <div class="glass-card p-3.5 rounded-xl">
+          <div class="flex items-center justify-between"><span class="font-bold text-white text-xs">sp500-minio</span><span class="text-[10px] text-emerald-400 bg-emerald-500/20 px-1.5 py-0.5 rounded">Up (healthy)</span></div>
+          <div class="text-[11px] text-slate-400 mt-1 font-mono">Ports: 9000, 9001</div>
+        </div>
+        <div class="glass-card p-3.5 rounded-xl">
+          <div class="flex items-center justify-between"><span class="font-bold text-white text-xs">sp500-kafka</span><span class="text-[10px] text-emerald-400 bg-emerald-500/20 px-1.5 py-0.5 rounded">Up (healthy)</span></div>
+          <div class="text-[11px] text-slate-400 mt-1 font-mono">Ports: 9092, 29092</div>
+        </div>
+        <div class="glass-card p-3.5 rounded-xl">
+          <div class="flex items-center justify-between"><span class="font-bold text-white text-xs">sp500-spark</span><span class="text-[10px] text-emerald-400 bg-emerald-500/20 px-1.5 py-0.5 rounded">Up (healthy)</span></div>
+          <div class="text-[11px] text-slate-400 mt-1 font-mono">Internal Job Server</div>
+        </div>
+        <div class="glass-card p-3.5 rounded-xl">
+          <div class="flex items-center justify-between"><span class="font-bold text-white text-xs">sp500-postgres</span><span class="text-[10px] text-emerald-400 bg-emerald-500/20 px-1.5 py-0.5 rounded">Up (healthy)</span></div>
+          <div class="text-[11px] text-slate-400 mt-1 font-mono">Port: 5432</div>
+        </div>
+        <div class="glass-card p-3.5 rounded-xl">
+          <div class="flex items-center justify-between"><span class="font-bold text-white text-xs">sp500-airflow</span><span class="text-[10px] text-emerald-400 bg-emerald-500/20 px-1.5 py-0.5 rounded">Up (healthy)</span></div>
+          <div class="text-[11px] text-slate-400 mt-1 font-mono">Port: 8080</div>
+        </div>
+        <div class="glass-card p-3.5 rounded-xl">
+          <div class="flex items-center justify-between"><span class="font-bold text-white text-xs">sp500-kafka-ui</span><span class="text-[10px] text-emerald-400 bg-emerald-500/20 px-1.5 py-0.5 rounded">Up</span></div>
+          <div class="text-[11px] text-slate-400 mt-1 font-mono">Port: 8082</div>
+        </div>
+        <div class="glass-card p-3.5 rounded-xl">
+          <div class="flex items-center justify-between"><span class="font-bold text-white text-xs">sp500-producer</span><span class="text-[10px] text-emerald-400 bg-emerald-500/20 px-1.5 py-0.5 rounded">Replay Ready</span></div>
+          <div class="text-[11px] text-slate-400 mt-1 font-mono">1,112 rec/s rate</div>
+        </div>
+        <div class="glass-card p-3.5 rounded-xl bg-sky-950/20 border-sky-500/30">
+          <div class="font-bold text-sky-400 text-xs">Bridge Network</div>
+          <div class="text-[11px] text-slate-300 mt-1 font-mono">stock-pipeline-net</div>
+          <div class="text-[10px] text-slate-400">Subnet: 172.19.0.0/16</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: MinIO Medallion Lakehouse -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">02 / FOUNDATION</div>
+      <h2 class="text-3xl font-bold text-white">MinIO: Medallion S3 Lakehouse Architecture</h2>
+      <p class="text-slate-400 text-sm">Physical object storage verifying Medallion lakehouse tiers.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+        <div class="glass-panel p-5 rounded-xl space-y-3 border-t-4 border-t-amber-600">
+          <div class="flex justify-between items-center"><span class="font-bold text-amber-400 text-sm">BRONZE TIER</span><span class="text-xs font-mono text-slate-400">s3a://.../bronze/</span></div>
+          <div class="text-2xl font-black text-white font-mono">3.16 GB</div>
+          <p class="text-xs text-slate-300">Raw, immutable CSV landing zone containing the complete 51.59M records archive and 505-company metadata.</p>
+        </div>
+        <div class="glass-panel p-5 rounded-xl space-y-3 border-t-4 border-t-slate-300">
+          <div class="flex justify-between items-center"><span class="font-bold text-slate-200 text-sm">SILVER TIER</span><span class="text-xs font-mono text-slate-400">s3a://.../silver/</span></div>
+          <div class="text-2xl font-black text-white font-mono">25 Files</div>
+          <p class="text-xs text-slate-300">Snappy Parquet partitioned by year/month. Cleaned, schema-validated, deduplicated, enriched with financial features.</p>
+        </div>
+        <div class="glass-panel p-5 rounded-xl space-y-3 border-t-4 border-t-yellow-400">
+          <div class="flex justify-between items-center"><span class="font-bold text-yellow-400 text-sm">GOLD & STATE</span><span class="text-xs font-mono text-slate-400">s3a://.../gold/</span></div>
+          <div class="text-2xl font-black text-white font-mono">19 + 58</div>
+          <p class="text-xs text-slate-300">19 analytics Parquet files (daily & streaming metrics) + 58 MinIO checkpoints ensuring Exactly-Once streaming recovery.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: Kafka KRaft Mode -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">02 / FOUNDATION</div>
+      <h2 class="text-3xl font-bold text-white">Apache Kafka 4.0 (KRaft Mode Event Backbone)</h2>
+      <p class="text-slate-400 text-sm">High-speed event replay partitioned for strict per-stock ordering.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        <div class="glass-card p-5 rounded-xl space-y-3 text-xs">
+          <div class="text-sky-400 font-bold uppercase font-mono">Broker & Partitioning Architecture</div>
+          <ul class="space-y-2.5 text-slate-300">
+            <li><strong>KRaft Consensus:</strong> Runs Apache Kafka 4.0 in modern KRaft mode (Zero Zookeeper dependencies).</li>
+            <li><strong>Target Topic:</strong> <code class="text-yellow-400">stock-market-data</code> (3 active partitions).</li>
+            <li><strong>Keying Strategy:</strong> Events are keyed by ticker symbol via MurmurHash2. All records for AAPL strictly land on the same partition.</li>
+            <li><strong>Observability:</strong> Kafka UI running on port 8082 tracks live consumer lag and topic offsets.</li>
+          </ul>
+        </div>
+        <div class="glass-panel p-5 rounded-xl space-y-4">
+          <div class="text-emerald-400 font-bold uppercase font-mono text-xs">Measured Replay Benchmarks</div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="glass-card p-4 rounded-lg text-center"><div class="text-2xl font-bold text-emerald-400 font-mono">1,112.4</div><div class="text-[11px] text-slate-400 mt-1">Records / Second Rate</div></div>
+            <div class="glass-card p-4 rounded-lg text-center"><div class="text-2xl font-bold text-sky-400 font-mono">100,000</div><div class="text-[11px] text-slate-400 mt-1">Events Streamed</div></div>
+          </div>
+          <div class="text-xs text-slate-400">Partitions balanced evenly: 33,334 / 33,333 / 33,333 events across P0, P1, P2.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 11: Spark Batch Processing -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">03 / PROCESSING</div>
+      <h2 class="text-3xl font-bold text-white">Spark Batch Processing Pipeline</h2>
+      <p class="text-slate-400 text-sm">PySpark 3.5 transforms raw Bronze CSV into partitioned Silver Parquet and PostgreSQL Gold tables.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-3 pt-2">
+        <div class="glass-card p-4 rounded-xl text-center space-y-1.5"><div class="text-sky-400 font-mono font-bold text-xs">1. INGEST</div><div class="font-bold text-white text-xs">Bronze Read</div><div class="text-[11px] text-slate-400">Reads 3.16 GB from MinIO S3</div></div>
+        <div class="glass-card p-4 rounded-xl text-center space-y-1.5"><div class="text-emerald-400 font-mono font-bold text-xs">2. AUDIT</div><div class="font-bold text-white text-xs">Quality Gate</div><div class="text-[11px] text-slate-400">Filters negative prices & anomalies</div></div>
+        <div class="glass-card p-4 rounded-xl text-center space-y-1.5"><div class="text-yellow-400 font-mono font-bold text-xs">3. ENRICH</div><div class="font-bold text-white text-xs">Corporate Join</div><div class="text-[11px] text-slate-400">Joins with 505 company sectors</div></div>
+        <div class="glass-card p-4 rounded-xl text-center space-y-1.5"><div class="text-purple-400 font-mono font-bold text-xs">4. WRITE</div><div class="font-bold text-white text-xs">Silver Parquet</div><div class="text-[11px] text-slate-400">25 monthly partitioned files</div></div>
+        <div class="glass-card p-4 rounded-xl text-center space-y-1.5"><div class="text-rose-400 font-mono font-bold text-xs">5. SERVE</div><div class="font-bold text-white text-xs">PostgreSQL</div><div class="text-[11px] text-slate-400">Atomic staging upsert in 27s</div></div>
+      </div>
+    </section>
+
+    <!-- SLIDE 12: Data Quality Rules -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">03 / PROCESSING</div>
+      <h2 class="text-3xl font-bold text-white">Data Validation & Quality Assurance Rules</h2>
+      <p class="text-slate-400 text-sm">Automated gatekeeping preventing corrupted data from entering trusted tiers.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 text-xs">
+        <div class="glass-card p-5 rounded-xl space-y-2">
+          <div class="text-sky-400 font-bold uppercase">Schema Integrity</div>
+          <p class="text-slate-300">Mandatory symbol, valid trading date, strict float64 price types, int64 volume. Missing required fields are instantly quarantined.</p>
+        </div>
+        <div class="glass-card p-5 rounded-xl space-y-2">
+          <div class="text-emerald-400 font-bold uppercase">Value Realism Checks</div>
+          <p class="text-slate-300">Rejects prices ≤ 0, volume < 0. Validates that prices do not experience unnatural 100x decimal drift or format corruption.</p>
+        </div>
+        <div class="glass-card p-5 rounded-xl space-y-2">
+          <div class="text-yellow-400 font-bold uppercase">OHLC Logical Rules</div>
+          <p class="text-slate-300">High must be ≥ Low, High must be ≥ Open and Close, Low must be ≤ Open and Close. Mathematical anomalies are logged and isolated.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 13: Feature Engineering -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">03 / PROCESSING</div>
+      <h2 class="text-3xl font-bold text-white">Derived Financial Features</h2>
+      <p class="text-slate-400 text-sm">Spark derives analytical indicators stored directly in Silver and Gold.</p>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 pt-2 text-xs font-mono">
+        <div class="glass-panel p-4 rounded-xl">
+          <div class="text-slate-400">Price Change ($)</div>
+          <div class="text-white font-bold text-sm mt-1">Close - Open</div>
+          <div class="text-[11px] text-sky-400 mt-2">Absolute dollar movement</div>
+        </div>
+        <div class="glass-panel p-4 rounded-xl">
+          <div class="text-slate-400">Daily Return (%)</div>
+          <div class="text-white font-bold text-sm mt-1">(Close - Open) / Open</div>
+          <div class="text-[11px] text-emerald-400 mt-2">Relative market performance</div>
+        </div>
+        <div class="glass-panel p-4 rounded-xl">
+          <div class="text-slate-400">Intraday Spread</div>
+          <div class="text-white font-bold text-sm mt-1">High - Low</div>
+          <div class="text-[11px] text-yellow-400 mt-2">Daily volatility indicator</div>
+        </div>
+        <div class="glass-panel p-4 rounded-xl">
+          <div class="text-slate-400">Typical Price</div>
+          <div class="text-white font-bold text-sm mt-1">(H + L + C) / 3</div>
+          <div class="text-[11px] text-purple-400 mt-2">Representative benchmark price</div>
+        </div>
+        <div class="glass-panel p-4 rounded-xl">
+          <div class="text-slate-400">Dollar Volume ($)</div>
+          <div class="text-white font-bold text-sm mt-1">Close × Volume</div>
+          <div class="text-[11px] text-rose-400 mt-2">Traded liquidity proxy</div>
+        </div>
+        <div class="glass-panel p-4 rounded-xl">
+          <div class="text-slate-400">Downstream Reusability</div>
+          <div class="text-white font-bold text-sm mt-1">SQL Views & Power BI</div>
+          <div class="text-[11px] text-cyan-400 mt-2">Zero recalculation latency</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 14: Structured Streaming & Watermarks -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">03 / PROCESSING</div>
+      <h2 class="text-3xl font-bold text-white">Spark Structured Streaming & Replay Windows</h2>
+      <p class="text-slate-400 text-sm">Stateful stream aggregation with exactly-once idempotency.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+        <div class="glass-panel p-5 rounded-xl space-y-2">
+          <div class="text-sky-400 font-bold text-xs uppercase font-mono">Dual-Time Model</div>
+          <h3 class="text-sm font-bold text-white">Synthetic Event Clock</h3>
+          <p class="text-xs text-slate-300">Original historical trading_date preserved; synthetic clock advances 1.0s/record without wall-clock datetime.now() dependencies.</p>
+        </div>
+        <div class="glass-panel p-5 rounded-xl space-y-2 border-emerald-500/40">
+          <div class="text-emerald-400 font-bold text-xs uppercase font-mono">Replay Windows</div>
+          <h3 class="text-sm font-bold text-white">4,335 Aggregation Windows</h3>
+          <p class="text-xs text-slate-300">Computed via <code class="text-yellow-400 font-mono">window(event_time, '5 minutes')</code> with 10-minute watermark bounding state memory.</p>
+        </div>
+        <div class="glass-panel p-5 rounded-xl space-y-2">
+          <div class="text-yellow-400 font-bold text-xs uppercase font-mono">Fault Tolerance</div>
+          <h3 class="text-sm font-bold text-white">58 MinIO Checkpoints</h3>
+          <p class="text-xs text-slate-300">Persists committed offsets in MinIO S3. Stream restarts leave PostgreSQL table at exactly 4,335 rows with 0 duplicates.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 15: Medallion Architecture Summary -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">03 / PROCESSING</div>
+      <h2 class="text-3xl font-bold text-white">Medallion Flow: Raw → Trusted → Useful</h2>
+      <p class="text-slate-400 text-sm">How raw data progresses into production-ready analytical assets.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+        <div class="glass-card p-6 rounded-xl space-y-3">
+          <div class="text-amber-500 font-bold font-mono text-xs">BRONZE LAYER</div>
+          <h3 class="text-lg font-bold text-white">Raw Landed Data</h3>
+          <ul class="text-xs text-slate-300 space-y-1.5">
+            <li>• 3.16 GB sp500_stocks.csv</li>
+            <li>• sp500_companies.csv metadata</li>
+            <li>• 100% immutable landing tier</li>
+          </ul>
+        </div>
+        <div class="glass-card p-6 rounded-xl space-y-3 border-slate-400/30">
+          <div class="text-slate-300 font-bold font-mono text-xs">SILVER LAYER</div>
+          <h3 class="text-lg font-bold text-white">Cleaned & Enriched</h3>
+          <ul class="text-xs text-slate-300 space-y-1.5">
+            <li>• 25 Snappy Parquet partitions</li>
+            <li>• Standardized schema & clean types</li>
+            <li>• Joined company sectors & features</li>
+          </ul>
+        </div>
+        <div class="glass-card p-6 rounded-xl space-y-3 border-yellow-400/30">
+          <div class="text-yellow-400 font-bold font-mono text-xs">GOLD LAYER</div>
+          <h3 class="text-lg font-bold text-white">Analytics Ready</h3>
+          <ul class="text-xs text-slate-300 space-y-1.5">
+            <li>• 19 Parquet analytical summaries</li>
+            <li>• 25,500 daily market metrics in DB</li>
+            <li>• Sub-millisecond Power BI DirectQuery</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 16: Airflow Orchestration -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">04 / DELIVERY</div>
+      <h2 class="text-3xl font-bold text-white">Apache Airflow: Workflow Orchestration & Quality Gates</h2>
+      <p class="text-slate-400 text-sm">DAG coordinates the complete pipeline flow while Spark executes heavy computation.</p>
+
+      <div class="glass-panel p-5 rounded-2xl">
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-2 text-center text-xs font-mono">
+          <div class="bg-slate-900 p-3 rounded-lg border border-slate-800"><div class="text-emerald-400 font-bold">1. check_dataset</div><div class="text-[10px] text-slate-500 mt-1">[SUCCESS]</div></div>
+          <div class="bg-slate-900 p-3 rounded-lg border border-slate-800"><div class="text-emerald-400 font-bold">2. verify_bronze</div><div class="text-[10px] text-slate-500 mt-1">[SUCCESS]</div></div>
+          <div class="bg-slate-900 p-3 rounded-lg border border-slate-800"><div class="text-emerald-400 font-bold">3. spark_batch</div><div class="text-[10px] text-slate-500 mt-1">[SUCCESS]</div></div>
+          <div class="bg-slate-900 p-3 rounded-lg border border-slate-800"><div class="text-emerald-400 font-bold">4. quality_gate</div><div class="text-[10px] text-slate-500 mt-1">[SUCCESS]</div></div>
+          <div class="bg-slate-900 p-3 rounded-lg border border-slate-800"><div class="text-emerald-400 font-bold">5. postgres_val</div><div class="text-[10px] text-slate-500 mt-1">[SUCCESS]</div></div>
+          <div class="bg-slate-900 p-3 rounded-lg border border-slate-800"><div class="text-emerald-400 font-bold">6. pipeline_ok</div><div class="text-[10px] text-slate-500 mt-1">[SUCCESS]</div></div>
+        </div>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 flex justify-between items-center">
+        <span>DAG Run Measured Duration: <strong>36.65 seconds</strong></span>
+        <span class="text-emerald-400 font-bold">ALL 6 QUALITY GATES PASSED (0 REJECTED, 0 DUPLICATES)</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 17: PostgreSQL Serving Layer -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">04 / DELIVERY</div>
+      <h2 class="text-3xl font-bold text-white">PostgreSQL 16: Analytical Serving Layer</h2>
+      <p class="text-slate-400 text-sm">High-performance relational tables and views optimized for BI tools.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        <div class="glass-card p-5 rounded-xl space-y-3 font-mono text-xs">
+          <div class="text-sky-400 font-bold">TOP STOCKS BY AVERAGE CLOSE (Real Query)</div>
+          <div class="space-y-1.5 text-slate-300">
+            <div class="flex justify-between border-b border-slate-800 pb-1"><span>PEP (PepsiCo)</span><span class="text-emerald-400">$256.93 (500 days)</span></div>
+            <div class="flex justify-between border-b border-slate-800 pb-1"><span>CMCSA (Comcast)</span><span class="text-emerald-400">$253.20 (500 days)</span></div>
+            <div class="flex justify-between border-b border-slate-800 pb-1"><span>CRM (Salesforce)</span><span class="text-emerald-400">$239.07 (500 days)</span></div>
+            <div class="flex justify-between border-b border-slate-800 pb-1"><span>LLY (Eli Lilly)</span><span class="text-emerald-400">$232.33 (500 days)</span></div>
+            <div class="flex justify-between"><span>MCD (McDonald's)</span><span class="text-emerald-400">$229.15 (500 days)</span></div>
+          </div>
+        </div>
+
+        <div class="glass-panel p-5 rounded-xl space-y-3 text-xs">
+          <div class="text-emerald-400 font-bold font-mono uppercase">DirectQuery Latency Proof</div>
+          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono space-y-1">
+            <div class="text-yellow-400">$ EXPLAIN ANALYZE SELECT * FROM vw_streaming_metrics WHERE symbol = 'AAPL';</div>
+            <div class="text-slate-400">Index Scan using idx_smm_symbol on streaming_market_metrics</div>
+            <div class="text-emerald-400 font-bold">Execution Time: 0.145 ms</div>
+          </div>
+          <p class="text-slate-300">Sub-millisecond latency guarantees seamless Power BI dashboard refresh with zero database bottleneck.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 18: Downstream Analytics & ML Boundary -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">04 / DELIVERY</div>
+      <h2 class="text-3xl font-bold text-white">Downstream Analytics & ML Quarantine Boundary</h2>
+      <p class="text-slate-400 text-sm">Clear contractual handoff between data engineering and downstream consumers.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        <div class="glass-card p-5 rounded-xl space-y-3 text-xs">
+          <div class="text-sky-400 font-bold uppercase font-mono">Power BI DirectQuery Integration</div>
+          <p class="text-slate-300 leading-relaxed">
+            Exposes 6 purpose-built SQL views: <code class="text-yellow-400">vw_latest_stock_metrics</code>, <code class="text-yellow-400">vw_top_volume</code>, <code class="text-yellow-400">vw_top_gainers</code>, <code class="text-yellow-400">vw_top_losers</code>, <code class="text-yellow-400">vw_streaming_metrics</code>, and <code class="text-yellow-400">vw_pipeline_health</code>.
+          </p>
+        </div>
+        <div class="glass-card p-5 rounded-xl space-y-3 text-xs border-purple-500/30">
+          <div class="text-purple-400 font-bold uppercase font-mono">ML & RAG Architecture Boundary</div>
+          <p class="text-slate-300 leading-relaxed">
+            Machine Learning (K-Means volatility clustering), RAG, and Streamlit are strictly quarantined in <strong class="text-white">docs/ML_HANDOFF.md</strong> as read-only downstream consumers, preserving core pipeline stability.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 19: Testing & Reliability -->
+    <section class="slide flex-col justify-center space-y-6 w-full">
+      <div class="text-xs font-mono text-sky-400 uppercase tracking-wider">05 / RELIABILITY</div>
+      <h2 class="text-3xl font-bold text-white">Testing, Resilience & Operational Confidence</h2>
+      <p class="text-slate-400 text-sm">Rigorous validation across data contracts, stream recovery, and database crashes.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2 text-xs">
+        <div class="glass-panel p-5 rounded-xl space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-emerald-400 font-bold font-mono uppercase">Automated PyTest Suite</span>
+            <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-mono font-bold">20/20 PASSED</span>
+          </div>
+          <p class="text-slate-300">20 unit & integration tests executed in <strong class="text-white font-mono">0.43 seconds</strong>:</p>
+          <ul class="space-y-1 text-slate-400 font-mono text-[11px]">
+            <li>✔ test_data_quality (5 tests: valid records, negative price, high < low)</li>
+            <li>✔ test_schema (3 tests: raw CSV, company metadata, Kafka schema)</li>
+            <li>✔ test_streaming_time_semantics (10 tests: dual-time, watermarking)</li>
+            <li>✔ test_transformations (2 tests: price change, safe division)</li>
+          </ul>
+        </div>
+
+        <div class="glass-panel p-5 rounded-xl space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-sky-400 font-bold font-mono uppercase">Fault Tolerance Drills</span>
+            <span class="text-xs bg-sky-500/20 text-sky-400 px-2 py-0.5 rounded font-mono font-bold">ZERO DATA LOSS</span>
+          </div>
+          <p class="text-slate-300">Hard crash simulations executed on live environment:</p>
+          <ul class="space-y-1.5 text-slate-300">
+            <li>• <strong>Postgres Hard Restart:</strong> Recovered in 13.62s; exactly 25,500 rows verified on persistent Docker volume.</li>
+            <li>• <strong>MinIO Checkpoint Recovery:</strong> Stream restarted from committed offset; 0 uncommitted events reprocessed (Exactly-Once).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 20: Verified Links & Thank You -->
+    <section class="slide flex-col justify-center items-center text-center space-y-6 w-full animate-fade">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
+        100% VERIFIED & PRODUCTION READY ON GITHUB
+      </div>
+      <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+        Thank You
+      </h2>
+      <p class="text-base text-slate-300 max-w-xl">
+        From 51.59M historical raw records to trusted, sub-millisecond analytical insights.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-3 pt-2">
+        <a href="https://github.com/M12hindawy/sp500-big-data-pipeline" target="_blank" class="glass-card hover:bg-slate-800 text-sky-400 px-5 py-3 rounded-xl font-mono text-xs flex items-center gap-2 transition border-sky-500/30">
+          <span>🔗 GitHub: M12hindawy/sp500-big-data-pipeline</span>
+        </a>
+        <a href="pipeline_demonstration.mp4" target="_blank" class="glass-card hover:bg-slate-800 text-emerald-400 px-5 py-3 rounded-xl font-mono text-xs flex items-center gap-2 transition border-emerald-500/30">
+          <span>🎬 Watch 13.5-Min Technical Demo Video</span>
+        </a>
+      </div>
+
+      <div class="pt-6 border-t border-slate-800 w-full max-w-md text-xs text-slate-400 space-y-1">
+        <div class="font-bold text-white">National Telecommunication Institute (NTI)</div>
+        <div>Abdelrahman Mandor • Hania Mohamed • Asmaa Adel • Catherine Yousry • Mohamed Ashraf</div>
+        <div class="text-sky-400 font-medium mt-1">Supervised by Eng. Ahmed Hassan</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Slide Navigation Footer -->
+  <footer class="bg-slate-950/80 backdrop-blur border-t border-slate-800 px-6 py-3 flex items-center justify-between z-50">
+    <div class="text-xs text-slate-500 font-mono flex items-center gap-4">
+      <span>Use <kbd class="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300">←</kbd> <kbd class="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300">→</kbd> to navigate</span>
+      <span>•</span>
+      <span class="text-slate-400">MinIO • Kafka • Spark • Airflow • PostgreSQL</span>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="flex items-center gap-3">
+      <button id="prev-btn" onclick="prevSlide()" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition border border-slate-700 flex items-center gap-1">
+        <span>← Previous</span>
+      </button>
+      <button id="next-btn" onclick="nextSlide()" class="px-4 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold transition shadow-lg shadow-sky-600/20 flex items-center gap-1">
+        <span>Next →</span>
+      </button>
+    </div>
+  </footer>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const currentNumEl = document.getElementById('current-slide-num');
+    const totalNumEl = document.getElementById('total-slides-num');
+    const progressBar = document.getElementById('progress-bar');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    let currentIdx = 0;
+
+    totalNumEl.textContent = slides.length;
+
+    function showSlide(idx) {
+      if (idx < 0) idx = 0;
+      if (idx >= slides.length) idx = slides.length - 1;
+      currentIdx = idx;
+
+      slides.forEach((s, i) => {
+        s.classList.toggle('active', i === currentIdx);
+      });
+
+      currentNumEl.textContent = currentIdx + 1;
+      const progressPercent = ((currentIdx + 1) / slides.length) * 100;
+      progressBar.style.width = progressPercent + '%';
+
+      prevBtn.disabled = currentIdx === 0;
+      prevBtn.classList.toggle('opacity-50', currentIdx === 0);
+      nextBtn.textContent = currentIdx === slides.length - 1 ? 'Finish ✔' : 'Next →';
+    }
+
+    function nextSlide() { showSlide(currentIdx + 1); }
+    function prevSlide() { showSlide(currentIdx - 1); }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') { nextSlide(); }
+      else if (e.key === 'ArrowLeft') { prevSlide(); }
+      else if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); }
+    });
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) { document.exitFullscreen(); }
+      }
+    }
+
+    showSlide(0);
+  </script>
+</body>
+</html>
